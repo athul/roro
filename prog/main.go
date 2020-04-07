@@ -23,8 +23,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	t := strings.ReplaceAll(string(dat), ".", " ")
-	t = strings.ReplaceAll(t, "\n", " ")
+	replacer := strings.NewReplacer(".", " ", "\n", " ", "-", " ", "_", " ", "'", " ", "/", " ", ":", " ", "(", " ", ")", " ")
+	t := string(dat)
+	t = replacer.Replace(t)
 	txt, ln := longestWord(t)
 	fmt.Printf("%s\t%d", txt, ln)
 }

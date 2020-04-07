@@ -11,12 +11,8 @@ def hello():
 @app.route("/repos")
 def repoResp():
     queryarg = request.args.get('q')
-    languagearg = request.args.get('language')
+    languagearg = request.args.get('lang')
     limitarg=request.args.get('limit',type=int)
-    if queryarg!=None and limitarg != None:
-        return jsonify(get_with_limits(queryarg,limitarg)) #jsonify converts the list to json response
-    elif queryarg is not None and languagearg is None:
-        return getRepos(queryarg)
-    elif languagearg != None :
-        return get_with_lang(queryarg, languagearg)
-    
+    if limitarg==None:
+        return jsonify(getRepos(queryarg,lang=languagearg,limit=10))
+    return jsonify(getRepos(queryarg,lang=languagearg,limit=limitarg))
